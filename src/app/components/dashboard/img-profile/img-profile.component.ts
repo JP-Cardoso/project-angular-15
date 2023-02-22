@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-img-profile',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class ImgProfileComponent {
 
+  @Input() img!: SafeResourceUrl |string;
+
+  constructor() {
+       
+  }
 }

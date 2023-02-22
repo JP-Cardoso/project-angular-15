@@ -13,11 +13,13 @@
           <ul class="display-flex-end">
             <li>
               <!-- COMPONENTE IMG-PROFILE AQUI -->
-              <app-img-profile></app-img-profile>
+              <app-img-profile
+               [img]="imageUser ? imageUser : isDefaultImage" 
+              ></app-img-profile>
             </li>
   
             <li class="mt-3">
-              <a>Sair</a>
+              <a (click)="logout()">Sair</a>
             </li>
           </ul>
         </div>
