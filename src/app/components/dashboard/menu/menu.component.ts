@@ -1,3 +1,4 @@
+import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,14 +8,22 @@ import { Component } from '@angular/core';
 })
 export class MenuComponent {
 
-  messageHour!: string
+  messageHour!: string;
+  showNameUser!: string;
 
-  constructor() {
-
+  constructor(
+    private localStorageService: LocalstorageService
+  ) {
+    
+    this.getNameUser()
   }
 
   getMessageHour(message: string) {
     this.messageHour = message    
   }
 
+  getNameUser() {
+    const nameUser = this.localStorageService.getLocalStorage('userInfo');
+    this.showNameUser = nameUser.name
+  }
 }
