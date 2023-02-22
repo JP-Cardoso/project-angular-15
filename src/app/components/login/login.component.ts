@@ -7,6 +7,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginUser } from 'src/app/interfaces/loginUser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnDestroy{
     private dialog: MatDialog,
     private apiService: ApiService,
     private localStorageService: LocalstorageService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private router: Router
   
   ) {
     this.initForms();
@@ -59,11 +61,16 @@ export class LoginComponent implements OnDestroy{
         .pipe(takeUntil(this.destroy$))
         .subscribe((res: LoginUser) => {
           const {token} = res
-          this.localStorageService.setLocaStorage('token', token),
-          this.localStorageService.setLocaStorage('user', email),
-          this.utilsService.showSuccess('Login realizado com sucesso!')
+          this.localStorageService.setLocalStorage('token', JSON.stringify(token)),
+          this.localStorageService.setLocalStorage('user', JSON.stringify(email)),
+          this.utilsService.showSuccess('Login realizado com sucesso!'),
+          this.navigateUrl('dashboard')
         })
     }
+  }
+
+  navigateUrl(url: string) {
+    this.router.navigate([`/${url}`])
   }
 
   isValidForm(): boolean {

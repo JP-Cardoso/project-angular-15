@@ -89,7 +89,7 @@ export class ContinuationRegisterComponent implements OnDestroy{
         ).subscribe((res: RegisterUser) => {
           // console.log(res.message);
           this.utilsService.showSuccess(res.message);
-          this.localStorageService.setLocaStorage('userInfo', JSON.stringify(res.user))
+          this.localStorageService.setLocalStorage('userInfo', JSON.stringify(res.user))
           this.refreshPage();
         })
      }
