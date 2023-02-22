@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { RegisterUser } from '../interfaces/registerUser';
 import { LoginUser } from '../interfaces/loginUser';
 import { DownloadImage } from '../interfaces/downloadImage';
+import { RegisterRevenues } from '../interfaces/registerRevenues';
 
 @Injectable({
   providedIn: 'root'
@@ -84,5 +85,14 @@ export class ApiService {
           return throwError(() => err) 
         })
       )
+  }
+
+  registerRevenues(revenue: any): Observable<RegisterRevenues> {
+    return this.httpClient.post<RegisterRevenues>(`${environment.BASE_URL}/auth/revenues`, revenue)
+    .pipe(
+      catchError((err)=> {
+        return throwError(() => err)
+      })
+    )
   }
 }
