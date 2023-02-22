@@ -2,12 +2,13 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { UtilsService } from './utils.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, first, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RegisterUser } from '../interfaces/registerUser';
 import { LoginUser } from '../interfaces/loginUser';
 import { DownloadImage } from '../interfaces/downloadImage';
 import { RegisterRevenues } from '../interfaces/registerRevenues';
+import { ListRevenues } from '../interfaces/listRevenues';
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +95,28 @@ export class ApiService {
         return throwError(() => err)
       })
     )
+  }
+
+  getRegisterrevenues(param: any, user: any): Observable<ListRevenues> {
+    let headers = new HttpHeaders();
+
+    headers = headers.set('month', param).set('user', user)
+
+    return this.httpClient.get<ListRevenues>(`${environment.BASE_URL}/list/revenues`, {headers: headers})
+      .pipe(
+        first(),
+        catchError((err) => {
+          if(err.status === 0 && err.status !== 404) {
+            this.utilsService.showError('Ocorreu um erro na aplicação, tente novamente')
+          } else if(err.status === 404) {
+            // msg vindo do back
+            this.utilsService.showError(err.error.message);
+
+          } else {
+          this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
+          }
+          return throwError(() => err) 
+        })
+      )
   }
 }
