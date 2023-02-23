@@ -8,6 +8,7 @@ import { ListRevenues } from 'src/app/interfaces/listRevenues';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { UpdateRevenuesComponent } from '../update-revenues/update-revenues.component';
+import { DeleteRevenues } from 'src/app/interfaces/deleteRevenue';
 
 @Component({
   selector: 'app-revenues',
@@ -113,7 +114,12 @@ export class RevenuesComponent implements AfterViewInit{
     } else {
       const question = confirm('Tem certeza que deseja excluir essa Receita?')
       if(question) {
-        
+        this.apiService.deleteRevenues(element._id)
+          .subscribe((res: DeleteRevenues) => {
+            if(res) {
+              this.storeService.setStoreRevenues(true)
+            }
+          })
       }
     }
   }

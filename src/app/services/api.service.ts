@@ -9,6 +9,7 @@ import { LoginUser } from '../interfaces/loginUser';
 import { DownloadImage } from '../interfaces/downloadImage';
 import { RegisterRevenues } from '../interfaces/registerRevenues';
 import { ListRevenues } from '../interfaces/listRevenues';
+import { DeleteRevenues } from '../interfaces/deleteRevenue';
 
 @Injectable({
   providedIn: 'root'
@@ -114,6 +115,24 @@ export class ApiService {
 
           } else {
           this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
+          }
+          return throwError(() => err) 
+        })
+      )
+  }
+
+  deleteRevenues(id: string): Observable<DeleteRevenues> {
+    return this.httpClient.delete<DeleteRevenues>(`${environment.BASE_URL}/delete/revenue/${id}`)
+      .pipe(
+        catchError((err) => {
+          if(err.status === 0 && err.status !== 404) {
+            this.utilsService.showError('Ocorreu um erro na aplicação, tente novamente')
+          } else if(err.status === 404) {
+            // msg vindo do back
+            this.utilsService.showError(err.error.message);
+  
+          } else {
+           this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
           }
           return throwError(() => err) 
         })
