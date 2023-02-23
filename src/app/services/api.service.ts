@@ -69,7 +69,7 @@ export class ApiService {
   }
 
   downloadImage(imgName: string): Observable<DownloadImage> {
-    const headers = new HttpHeaders().set('imgName', imgName)
+    const headers = new HttpHeaders().set('imgname', imgName)
 
     return this.httpClient.get<DownloadImage>(`${environment.BASE_URL}/download/image`, {headers})
       .pipe(

@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { Category } from 'src/app/interfaces/category';
 import { DOCUMENT } from '@angular/common';
+
 import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
@@ -25,7 +26,7 @@ export class AddRevenuesComponent implements OnDestroy{
 
   constructor(
     private fb: FormBuilder,
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) private document: any,
     private apiService: ApiService,
     private localStorageService: LocalstorageService,
     private storeService: StoreService,
@@ -52,7 +53,10 @@ export class AddRevenuesComponent implements OnDestroy{
           this.mounth = res
         })
         this.preventFutureDate()
+     
   }
+
+
 
   initform() {
     this.form = this.fb.group({

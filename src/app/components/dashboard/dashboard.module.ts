@@ -1,6 +1,7 @@
 import { DashboardComponent } from './dashboard.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
+
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { MenuComponent } from './menu/menu.component';
@@ -12,12 +13,17 @@ import { DebtsComponent } from './debts/debts.component';
 import { FooterComponent } from './footer/footer.component';
 import { MessageHourComponent } from './message-hour/message-hour.component';
 import { ImgProfileComponent } from './img-profile/img-profile.component';
-import { SharedMaterialModule } from 'src/app/shared/shared-material/shared-material.module';
 import { CardViewComponent } from './card-view/card-view.component';
 import { AddRevenuesComponent } from './add-revenues/add-revenues.component'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonthsRevenuesComponent } from './months-revenues/months-revenues.component';
 import { CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+import { SharedMaterialModule } from 'src/app/shared/shared-material/shared-material.module';
+
+import  localePt from "@angular/common/locales/pt"
+import { ShortenerPipe } from 'src/app/shared/pipes/shortener.pipe';
+
+registerLocaleData(localePt)
 
 export const CustomCurrencyMaskConfig = {
   align: 'left',
@@ -30,6 +36,16 @@ export const CustomCurrencyMaskConfig = {
 }
 
 @NgModule({
+  providers: [
+    {
+      provide: CURRENCY_MASK_CONFIG,
+      useValue: CustomCurrencyMaskConfig
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt'
+    }
+  ],
   declarations: [
     DashboardComponent,
     MenuComponent,
@@ -43,7 +59,9 @@ export const CustomCurrencyMaskConfig = {
     ImgProfileComponent,
     CardViewComponent,
     AddRevenuesComponent,
-    MonthsRevenuesComponent
+    MonthsRevenuesComponent,
+    ShortenerPipe,
+
   ],
   imports: [
     CommonModule,
@@ -52,12 +70,8 @@ export const CustomCurrencyMaskConfig = {
     ReactiveFormsModule,
     FormsModule,
     CurrencyMaskModule
-  ],
-  providers: [
-    {
-      provide: CURRENCY_MASK_CONFIG,
-      useValue: CustomCurrencyMaskConfig
-    }
+
   ]
+
 })
 export class DashboardModule { }

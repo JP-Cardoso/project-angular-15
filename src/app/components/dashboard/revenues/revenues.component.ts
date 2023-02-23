@@ -3,7 +3,7 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { StoreService } from './../../../shared/store.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRevenuesComponent } from './../add-revenues/add-revenues.component';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ListRevenues } from 'src/app/interfaces/listRevenues';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,7 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './revenues.component.html',
   styleUrls: ['./revenues.component.scss']
 })
-export class RevenuesComponent {
+export class RevenuesComponent implements AfterViewInit{
   
   monthSelected!: string;
   user!: string;
@@ -22,6 +22,13 @@ export class RevenuesComponent {
   arrRevenues: any[] = []
 
   public dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = [
+    'tipoReceita',
+    'valor',
+    'dataEntrada',
+    '_id',
+    'acoes'
+  ]
   @ViewChild('paginator') paginator!: MatPaginator;
   constructor(
     private dialog: MatDialog,
@@ -38,6 +45,11 @@ export class RevenuesComponent {
     this.storeService.getStoreMonth().subscribe(res => {
       this.monthSelected = res
     })
+  }
+
+  ngAfterViewInit() {
+    this.getResgisterRevenues(this.monthSelected)
+
   }
 
   getResgisterRevenues(monthSelected: string) {
