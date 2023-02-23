@@ -23,6 +23,7 @@ import { SharedMaterialModule } from 'src/app/shared/shared-material/shared-mate
 import  localePt from "@angular/common/locales/pt"
 import { ShortenerPipe } from 'src/app/shared/pipes/shortener.pipe';
 import { InputWidthDirective } from 'src/app/shared/input-width.directive';
+import { UpdateRevenuesComponent } from './update-revenues/update-revenues.component';
 
 registerLocaleData(localePt)
 
@@ -62,7 +63,8 @@ export const CustomCurrencyMaskConfig = {
     AddRevenuesComponent,
     MonthsRevenuesComponent,
     ShortenerPipe,
-    InputWidthDirective
+    InputWidthDirective,
+    UpdateRevenuesComponent
 
   ],
   imports: [

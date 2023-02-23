@@ -7,6 +7,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ListRevenues } from 'src/app/interfaces/listRevenues';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { UpdateRevenuesComponent } from '../update-revenues/update-revenues.component';
 
 @Component({
   selector: 'app-revenues',
@@ -30,26 +31,26 @@ export class RevenuesComponent implements AfterViewInit{
     'acoes'
   ]
   @ViewChild('paginator') paginator!: MatPaginator;
+
   constructor(
     private dialog: MatDialog,
     private storeService: StoreService,
     private localStorageService: LocalstorageService,
     private apiService: ApiService,
     ) {
-    this.storeService.getStoreRegisterRevenues().subscribe(res => {
+    this.storeService.getStoreRevenues().subscribe(res => {
       if(res) {
         this.getResgisterRevenues(this.monthSelected)
       }
-    })
-
-    this.storeService.getStoreMonth().subscribe(res => {
-      this.monthSelected = res
-    })
+    })  
   }
 
   ngAfterViewInit() {
-    this.getResgisterRevenues(this.monthSelected)
+    this.storeService.getStoreMonth().subscribe(res => {
+      this.monthSelected = res
+    })
 
+    this.getResgisterRevenues(this.monthSelected)
   }
 
   getResgisterRevenues(monthSelected: string) {
@@ -98,5 +99,22 @@ export class RevenuesComponent implements AfterViewInit{
   applyFilter(event: any) {
     const filterValues = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValues.trim().toLocaleLowerCase();    
+  }
+  
+  selectAction(action: string, element: any) {
+    console.log(action, element);    
+    if(action.indexOf('edit.png') != -1) {
+      this.dialog.open(UpdateRevenuesComponent, {
+        width: '600px', 
+        data: {
+          data: element
+        }
+      })
+    } else {
+      const question = confirm('Tem certeza que deseja excluir essa Receita?')
+      if(question) {
+        
+      }
+    }
   }
 }
