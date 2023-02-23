@@ -103,7 +103,6 @@ export class RevenuesComponent implements AfterViewInit{
   }
   
   selectAction(action: string, element: any) {
-    console.log(action, element);    
     if(action.indexOf('edit.png') != -1) {
       this.dialog.open(UpdateRevenuesComponent, {
         width: '600px', 
