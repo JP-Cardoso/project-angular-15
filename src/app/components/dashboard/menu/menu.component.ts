@@ -37,7 +37,6 @@ export class MenuComponent {
   getNameUser() {
     const nameUser = this.localStorageService.getLocalStorage('userInfo');
     this.showNameUser = nameUser.name
-    console.log(this.showNameUser);
     
   }
 

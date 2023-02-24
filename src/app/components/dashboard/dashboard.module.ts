@@ -25,6 +25,7 @@ import { ShortenerPipe } from 'src/app/shared/pipes/shortener.pipe';
 import { InputWidthDirective } from 'src/app/shared/input-width.directive';
 import { UpdateRevenuesComponent } from './update-revenues/update-revenues.component';
 import { AddDebtsComponent } from './add-debts/add-debts.component';
+import { UpdateDebsComponent } from './update-debs/update-debs.component';
 
 registerLocaleData(localePt)
 
@@ -66,7 +67,8 @@ export const CustomCurrencyMaskConfig = {
     ShortenerPipe,
     InputWidthDirective,
     UpdateRevenuesComponent,
-    AddDebtsComponent
+    AddDebtsComponent,
+    UpdateDebsComponent
 
   ],
   imports: [

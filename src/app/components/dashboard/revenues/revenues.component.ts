@@ -44,6 +44,7 @@ export class RevenuesComponent implements AfterViewInit{
         this.getResgisterRevenues(this.monthSelected)
       }
     })  
+    this.defineInitMonth()
   }
 
   ngAfterViewInit() {
@@ -89,7 +90,6 @@ export class RevenuesComponent implements AfterViewInit{
           this.dataSource.data = arr;
           this.dataSource.paginator = this.paginator;
           this.loading = false;
-          console.log('arr -->', arr);
           
         }, 2000)
 
@@ -129,5 +129,15 @@ export class RevenuesComponent implements AfterViewInit{
           })
       }
     }
+  }
+
+
+  defineInitMonth() {
+    let date = new Date();
+    let dateString = date.toLocaleDateString('pt-br', {month: 'long'});
+    let letterDateString = dateString[0].toUpperCase() + dateString.substring(1);
+
+    this.monthSelected == undefined ? (this.monthSelected = letterDateString) : this.monthSelected 
+    
   }
 }

@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { StoreService } from 'src/app/shared/store.service';
 import { AddDebtsComponent } from '../add-debts/add-debts.component';
+import { UpdateDebsComponent } from '../update-debs/update-debs.component';
 
 @Component({
   selector: 'app-debts',
@@ -81,7 +82,6 @@ export class DebtsComponent implements AfterViewInit{
           this.dataSource.data = arr;
           this.dataSource.paginator = this.paginator;
           this.loading = false;
-          console.log('arr -->', arr);
           
         }, 2000)
 
@@ -100,6 +100,27 @@ export class DebtsComponent implements AfterViewInit{
   applyFilter(event: any) {
     const filterValues = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValues.trim().toLocaleLowerCase();    
+  }
+
+  selectAction(action: string, element: any) {
+    if(action.indexOf('edit.png') != -1) {
+      this.dialog.open(UpdateDebsComponent, {
+        width: '600px', 
+        data: {
+          data: element
+        }
+      })
+    } else {
+      const question = confirm('Tem certeza que deseja excluir essa Receita?')
+      if(question) {
+        this.apiService.deleteRevenues(element._id)
+          .subscribe((res: any) => {
+            if(res) {
+              this.storeService.setStoreRevenues(true)
+            }
+          })
+      }
+    }
   }
 
 }
