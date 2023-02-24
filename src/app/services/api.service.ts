@@ -11,6 +11,7 @@ import { RegisterRevenues } from '../interfaces/registerRevenues';
 import { ListRevenues } from '../interfaces/listRevenues';
 import { DeleteRevenues } from '../interfaces/deleteRevenue';
 import { UpdateRevenues } from '../interfaces/updateRevenues';
+import { RegisterDebts } from '../interfaces/registerDebts';
 
 @Injectable({
   providedIn: 'root'
@@ -157,6 +158,16 @@ export class ApiService {
       })
     )
   }
+
+  registerDebts(debts: any): Observable<RegisterDebts>{
+    return this.httpClient.post<RegisterDebts>(`${environment.BASE_URL}/auth/debts`, debts)
+    .pipe(
+      catchError((err) => {
+        return throwError(() => err)
+      })
+    )
+  }
+
 }
 
 

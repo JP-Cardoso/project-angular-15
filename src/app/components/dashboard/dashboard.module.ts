@@ -24,6 +24,7 @@ import  localePt from "@angular/common/locales/pt"
 import { ShortenerPipe } from 'src/app/shared/pipes/shortener.pipe';
 import { InputWidthDirective } from 'src/app/shared/input-width.directive';
 import { UpdateRevenuesComponent } from './update-revenues/update-revenues.component';
+import { AddDebtsComponent } from './add-debts/add-debts.component';
 
 registerLocaleData(localePt)
 
@@ -64,7 +65,8 @@ export const CustomCurrencyMaskConfig = {
     MonthsRevenuesComponent,
     ShortenerPipe,
     InputWidthDirective,
-    UpdateRevenuesComponent
+    UpdateRevenuesComponent,
+    AddDebtsComponent
 
   ],
   imports: [
