@@ -10,6 +10,7 @@ import { DownloadImage } from '../interfaces/downloadImage';
 import { RegisterRevenues } from '../interfaces/registerRevenues';
 import { ListRevenues } from '../interfaces/listRevenues';
 import { DeleteRevenues } from '../interfaces/deleteRevenue';
+import { UpdateRevenues } from '../interfaces/updateRevenues';
 
 @Injectable({
   providedIn: 'root'
@@ -138,4 +139,24 @@ export class ApiService {
         })
       )
   }
+
+  updateRevenues(id: string, payload: any): Observable<UpdateRevenues> {
+    return this.httpClient.put<UpdateRevenues>(`${environment.BASE_URL}/update/revenues/${id}`, payload)
+    .pipe(
+      catchError((err) => {
+        if(err.status === 0 && err.status !== 404) {
+          this.utilsService.showError('Ocorreu um erro na aplicação, tente novamente')
+        } else if(err.status === 404) {
+          // msg vindo do back
+          this.utilsService.showError(err.error.message);
+
+        } else {
+         this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
+        }
+        return throwError(() => err) 
+      })
+    )
+  }
 }
+
+

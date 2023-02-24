@@ -137,7 +137,7 @@ export class AddRevenuesComponent implements OnDestroy{
         for(let i = 0; i < this.months.length; i++){
           dateEntry = new Date(dataReplace[0], this.searchIndexMonth(this.months[i]), dataReplace[2])
 
-          const paylod = {
+          const payload = {
             user: {
               title: user,
               month: {
@@ -152,10 +152,10 @@ export class AddRevenuesComponent implements OnDestroy{
           }
 
           this.apiService.registerRevenues(payload)
-            .subscribe()
-            this.storeService.setStoreRevenues(true)
-            this.dialogRef.close();           
+            .subscribe()                    
         }
+        this.storeService.setStoreRevenues(true)
+        this.dialogRef.close();  
         return
       }
 

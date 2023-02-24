@@ -1,8 +1,13 @@
+import { DialogRef } from '@angular/cdk/dialog';
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from 'src/app/interfaces/category';
+import { UpdateRevenues } from 'src/app/interfaces/updateRevenues';
+import { ApiService } from 'src/app/services/api.service';
+import { LocalstorageService } from 'src/app/services/localstorage.service';
+import { StoreService } from 'src/app/shared/store.service';
 
 @Component({
   selector: 'app-update-revenues',
@@ -14,11 +19,16 @@ export class UpdateRevenuesComponent {
   form!: FormGroup;
   typeRevenue!: string;
   categoties!: Category[];
+  month!: string
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(DOCUMENT) private document: any,
-    private fb: FormBuilder 
+    private fb: FormBuilder,
+    private localStorage:LocalstorageService,
+    private apiService: ApiService,
+    private storeService: StoreService,
+    private dialogRef: DialogRef<UpdateRevenuesComponent>
   ) {
     console.log(this.data);
     this.initForm();
@@ -38,6 +48,9 @@ export class UpdateRevenuesComponent {
       }
     ]
     // this.setStoreRevenuetFutureDate()
+    this.storeService.getStoreMonth().subscribe(res => {
+      this.month = res
+    })
   }
 
   initForm() {
@@ -80,5 +93,50 @@ export class UpdateRevenuesComponent {
   //   console.log(inputDate)    
   //   inputDate.max = maxDate    
   // }
+
+  submit() {
+    const categoryInput = this.getValueControl(this.form, 'typeRevenue');
+
+    if(!categoryInput) {
+      this.form.patchValue({
+        typeRevenue: this.typeRevenue
+      })
+    }
+
+    if(this.isValidForm()) {
+      let typeRevenue = this.getValueControl(this.form, 'typeRevenue')
+      let value = this.getValueControl(this.form, 'value')
+      let dateEntry = this.getValueControl(this.form, 'dateEntry')
+      let user = this.localStorage.getLocalStorage('user')
+
+      const payload = {
+        user : {
+          title: user,
+          month: {
+            title: this.month,
+            listMonth: {
+              typeRevenue,
+              value,
+              dateEntry
+            }
+          }
+        }
+      }
+
+      this.apiService.updateRevenues(this.data.data._id, payload)
+        .subscribe((res: UpdateRevenues) => {
+          this.storeService.setStoreRevenues(true)
+        })
+    }
+    this.dialogRef.close()
+  }
+
+  isValidForm(): boolean {
+    return this.form.valid
+  }
+
+  getValueControl(form: FormGroup, control: string) {
+    return form.controls[control].value
+  }
 
 }
