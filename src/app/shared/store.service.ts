@@ -11,6 +11,11 @@ export class StoreService {
   private storeRegisterDebts = new BehaviorSubject<boolean>(false);
   private searchRevenuesByMonth = new BehaviorSubject<boolean>(false);
   private searchDebtsByMonth = new BehaviorSubject<boolean>(false);
+  private debtsPrev = new BehaviorSubject<boolean>(false);
+  private debtsNext = new BehaviorSubject<boolean>(false);
+  private revenuesPrev = new BehaviorSubject<boolean>(false);
+  private revenuesNext = new BehaviorSubject<boolean>(false)
+
 
   constructor() { }
 
@@ -53,5 +58,38 @@ export class StoreService {
   getSearchDebtsByMonth() {
     return this.searchDebtsByMonth.asObservable();
   }
+
+  setDebtsPrev(value: boolean) {
+    this.debtsPrev.next(value)
+  }
+
+  getDebtsPrev() {
+    return this.debtsPrev.asObservable();
+  }
+
+  setDebtsNext(value: boolean) {
+    this.debtsNext.next(value)
+  }
+
+  getDebtsNext() {
+    return this.debtsNext.asObservable();
+  }
+
+  setRevenuesPrev(store: boolean) {
+    return this.revenuesPrev.next(store)
+  }
+
+  getRevenuesPrev() {
+    return this.revenuesPrev.asObservable();
+  }
+
+  setRevenuesNext(store: boolean) {
+    return this.revenuesNext.next(store)
+  }
+
+  getRevenuesNext() {
+    return this.revenuesNext.asObservable();
+  }
+
 
 }

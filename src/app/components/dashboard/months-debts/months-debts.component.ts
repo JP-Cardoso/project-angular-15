@@ -31,6 +31,18 @@ export class MonthsDebtsComponent {
     private storeService: StoreService
   ) {
     this.getMonthCurrent()
+    this.storeService.getRevenuesPrev().subscribe(res => {
+      if(res) {
+        this.prevWithoutDebts();
+     }
+    })
+
+    this.storeService.getRevenuesNext().subscribe(res => {
+      if(res) {
+        this.nextWithoutDebts();
+      }
+    })
+
   }
 
 
@@ -58,7 +70,18 @@ export class MonthsDebtsComponent {
     this.month = this.months[this.index];
     this.storeService.setStoreMonth(this.months[this.index]);
     this.storeService.setSearchDebtsByMonth(true);
+    this.storeService.setDebtsPrev(true)
   }
+
+  prevWithoutDebts() {
+    this.findIndexElement();
+    this.index += 1;
+    this.index %= this.months.length;
+    this.month = this.months[this.index];
+    this.storeService.setStoreMonth(this.months[this.index]);
+    this.storeService.setSearchDebtsByMonth(true);
+  }
+
 
   next() {
     this.findIndexElement();
@@ -66,7 +89,19 @@ export class MonthsDebtsComponent {
     this.index %= this.months.length;
     this.month = this.months[this.index];
     this.storeService.setStoreMonth(this.months[this.index]);
+    this.storeService.setSearchRevenuesByMonth(true);
+    this.storeService.setDebtsNext(true)
+  }
+
+  nextWithoutDebts() {
+    this.findIndexElement();
+    this.index += 1;
+    this.index %= this.months.length;
+    this.month = this.months[this.index];
+    this.storeService.setStoreMonth(this.months[this.index]);
+    this.storeService.setSearchRevenuesByMonth(true);
     this.storeService.setSearchDebtsByMonth(true);
+
   }
 
 }

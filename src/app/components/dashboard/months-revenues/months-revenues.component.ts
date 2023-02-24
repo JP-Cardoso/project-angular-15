@@ -57,6 +57,7 @@ export class MonthsRevenuesComponent {
     this.month = this.months[this.index];
     this.storeService.setStoreMonth(this.months[this.index]);
     this.storeService.setSearchRevenuesByMonth(true);
+    this.storeService.setSearchDebtsByMonth(true)
   }
 
   next() {
