@@ -54,13 +54,18 @@ export class MonthsRevenuesComponent {
     this.findIndexElement();
     this.index += 1;
     this.index %= this.months.length;
-    this.month = this.months[this.index]
-    this.storeService.setStoreMonth(this.months[this.index])
-    this.storeService.setSearchRevenuesByMonth(true)
+    this.month = this.months[this.index];
+    this.storeService.setStoreMonth(this.months[this.index]);
+    this.storeService.setSearchRevenuesByMonth(true);
   }
 
   next() {
-    
+    this.findIndexElement();
+    this.index += 1;
+    this.index %= this.months.length;
+    this.month = this.months[this.index];
+    this.storeService.setStoreMonth(this.months[this.index]);
+    this.storeService.setSearchRevenuesByMonth(true);
   }
 
 }
