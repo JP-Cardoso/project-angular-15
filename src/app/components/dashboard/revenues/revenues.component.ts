@@ -52,6 +52,14 @@ export class RevenuesComponent implements AfterViewInit{
     })
 
     this.getResgisterRevenues(this.monthSelected)
+    this.storeService.getSearchRevenuesByMonth().subscribe(res => {
+      if(res) {
+        this.getResgisterRevenues(this.monthSelected)
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator
+        }, 3000)
+      }
+    })
   }
 
   getResgisterRevenues(monthSelected: string) {
