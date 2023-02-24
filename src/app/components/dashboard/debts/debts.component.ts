@@ -96,5 +96,10 @@ export class DebtsComponent implements AfterViewInit{
     this.monthSelected == undefined ? (this.monthSelected= letterDateString) : this.monthSelected
     
   }
+  // faz busca
+  applyFilter(event: any) {
+    const filterValues = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValues.trim().toLocaleLowerCase();    
+  }
 
 }
