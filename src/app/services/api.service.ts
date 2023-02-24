@@ -12,6 +12,7 @@ import { ListRevenues } from '../interfaces/listRevenues';
 import { DeleteRevenues } from '../interfaces/deleteRevenue';
 import { UpdateRevenues } from '../interfaces/updateRevenues';
 import { RegisterDebts } from '../interfaces/registerDebts';
+import { ListDebts } from '../interfaces/listDebts';
 
 @Injectable({
   providedIn: 'root'
@@ -167,6 +168,29 @@ export class ApiService {
       })
     )
   }
+
+  getRegisterDebts(param: any, user: any): Observable<ListDebts> {
+    let headers = new HttpHeaders()
+    headers = headers.set('month', param).set('user', user)
+
+    return this.httpClient.get<ListDebts>(`${environment.BASE_URL}/list/debts`, {headers: headers})
+    .pipe(
+      first(),
+      catchError((err) => {
+        if(err.status === 0 && err.status !== 404) {
+          this.utilsService.showError('Ocorreu um erro na aplicação, tente novamente')
+        } else if(err.status === 404) {
+          // msg vindo do back
+          this.utilsService.showError(err.error.message);
+
+        } else {
+        this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
+        }
+        return throwError(() => err) 
+      })
+
+    )
+  }  
 
 }
 
