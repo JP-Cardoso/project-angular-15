@@ -14,6 +14,7 @@ import { UpdateRevenues } from '../interfaces/updateRevenues';
 import { RegisterDebts } from '../interfaces/registerDebts';
 import { ListDebts } from '../interfaces/listDebts';
 import { UpdateDebts } from '../interfaces/updateDebts';
+import { DeleteDebts } from '../interfaces/deleteDebts';
 
 @Injectable({
   providedIn: 'root'
@@ -213,8 +214,22 @@ export class ApiService {
   }
 
 
-  deleteDebs() {
-    
+  deleteDebts(id: string): Observable<DeleteDebts> {
+    return this.httpClient.delete<DeleteDebts>(`${environment.BASE_URL}/delete/debt/${id}`)
+    .pipe(
+      catchError((err) => {
+        if(err.status === 0 && err.status !== 404) {
+          this.utilsService.showError('Ocorreu um erro na aplicação, tente novamente')
+        } else if(err.status === 404) {
+          // msg vindo do back
+          this.utilsService.showError(err.error.message);
+
+        } else {
+         this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
+        }
+        return throwError(() => err) 
+      })
+    )
   }
 
 }

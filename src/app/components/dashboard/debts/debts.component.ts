@@ -52,7 +52,17 @@ export class DebtsComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.getResgisterDebts(this.monthSelected)
+    this.getResgisterDebts(this.monthSelected);
+
+    this.storeService.getSearchDebtsByMonth().subscribe(res => {
+      if(res) {
+        this.getResgisterDebts(this.monthSelected);
+
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator
+        }, 3000)
+      }
+    })
   }
 
   getResgisterDebts(monthSelected: string) {
@@ -113,10 +123,10 @@ export class DebtsComponent implements AfterViewInit{
     } else {
       const question = confirm('Tem certeza que deseja excluir essa Receita?')
       if(question) {
-        this.apiService.deleteRevenues(element._id)
+        this.apiService.deleteDebts(element._id)
           .subscribe((res: any) => {
             if(res) {
-              this.storeService.setStoreRevenues(true)
+              this.storeService.setStoreDebts(true)
             }
           })
       }
