@@ -1,1 +1,6 @@
-<p>debts-card works!</p>
+<div *ngIf="balanceDebts">
+    <mat-card class="card">
+      <p class="valueTitle">{{balanceDebts.title}}</p>
+      <h1 class="valueTotal">{{balanceDebts.value | currency: 'BRL': "symbol": "1.2-2"}}</h1>
+    </mat-card>
+  </div>

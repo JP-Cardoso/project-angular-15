@@ -14,8 +14,12 @@ export class StoreService {
   private debtsPrev = new BehaviorSubject<boolean>(false);
   private debtsNext = new BehaviorSubject<boolean>(false);
   private revenuesPrev = new BehaviorSubject<boolean>(false);
-  private revenuesNext = new BehaviorSubject<boolean>(false)
-
+  private revenuesNext = new BehaviorSubject<boolean>(false);
+  private balanceRevenuesTotal= new BehaviorSubject<any>(null);
+  private balanceDebtsTotal = new BehaviorSubject<any>(null);
+  private revenuesTotal = new BehaviorSubject<any>(null);
+  private debtsTotal = new BehaviorSubject<any>(null);
+  private balanceTotal = new BehaviorSubject<boolean>(false)
 
   constructor() { }
 
@@ -36,7 +40,7 @@ export class StoreService {
   }
 
   setSearchRevenuesByMonth(value: boolean) {
-    this.searchRevenuesByMonth.next(value)
+    this.searchRevenuesByMonth.next(value);
   }
 
   getSearchRevenuesByMonth() {
@@ -44,7 +48,7 @@ export class StoreService {
   }
 
   setStoreDebts(value: boolean) {
-    this.storeRegisterDebts.next(value)
+    this.storeRegisterDebts.next(value);
   }
 
   getStoreDebts() {
@@ -52,7 +56,7 @@ export class StoreService {
   }
 
   setSearchDebtsByMonth(value: boolean) {
-    this.searchDebtsByMonth.next(value)
+    this.searchDebtsByMonth.next(value);
   }
 
   getSearchDebtsByMonth() {
@@ -60,7 +64,7 @@ export class StoreService {
   }
 
   setDebtsPrev(value: boolean) {
-    this.debtsPrev.next(value)
+    this.debtsPrev.next(value);
   }
 
   getDebtsPrev() {
@@ -68,7 +72,7 @@ export class StoreService {
   }
 
   setDebtsNext(value: boolean) {
-    this.debtsNext.next(value)
+    this.debtsNext.next(value);
   }
 
   getDebtsNext() {
@@ -76,7 +80,7 @@ export class StoreService {
   }
 
   setRevenuesPrev(store: boolean) {
-    return this.revenuesPrev.next(store)
+    return this.revenuesPrev.next(store);
   }
 
   getRevenuesPrev() {
@@ -84,11 +88,51 @@ export class StoreService {
   }
 
   setRevenuesNext(store: boolean) {
-    return this.revenuesNext.next(store)
+    return this.revenuesNext.next(store);
   }
 
   getRevenuesNext() {
     return this.revenuesNext.asObservable();
+  }
+
+  setBalanceRevenuesTotal(value: any) {
+    this.balanceRevenuesTotal.next(value);
+  }
+
+  getBalanceRevenuesTotal() {
+    return this.balanceRevenuesTotal.asObservable();
+  }
+
+  setBalanceDebtsTotal(value: any) {
+    this.balanceDebtsTotal.next(value)
+  }
+
+  getBalanceDebtsTotal() {
+    return this.balanceDebtsTotal.asObservable();
+  }
+
+  setRevenuesTotal(value: any) {
+    this.revenuesTotal.next(value)
+  }
+
+  getRevenuesTotal() {
+    return this.revenuesTotal.asObservable()
+  }
+
+  setDebtsTotal(value: any) {
+    this.debtsTotal.next(value)
+  }
+
+  getDebtsTotal() {
+    return this.debtsTotal.asObservable()
+  }
+
+  setBalanceTotal(value: boolean) {
+    this.balanceTotal.next(value)
+  }
+
+  getBalanceTotal() {
+    return this.balanceTotal.asObservable()
   }
 
 

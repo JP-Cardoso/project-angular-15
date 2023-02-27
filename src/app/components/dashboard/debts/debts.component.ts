@@ -19,13 +19,14 @@ export class DebtsComponent implements AfterViewInit{
   user!: string;  
   loading = false;
   emptyResult = false;  
-  arrDebts: any[] = [];
+  arrDebts!: any;
   public dataSource = new MatTableDataSource<any>();
   @ViewChild('paginator') paginator!: MatPaginator;
   monthSelected!: string;
   displayedColums: string[] = [
     'divida', 'categoria', 'valor', 'dataVencimento', '_id', 'acoes'
-  ]
+  ];
+  totalDebts!: any
 
   constructor(
     private dialog: MatDialog,
@@ -75,7 +76,7 @@ export class DebtsComponent implements AfterViewInit{
         if(res.result.length === 0) {
           this.emptyResult = true;
           this.arrDebts = []
-        
+          this.totalExpense();
         } else {
           this.emptyResult = false;
           this.arrDebts = arr;
@@ -87,6 +88,8 @@ export class DebtsComponent implements AfterViewInit{
             arr.push(element.user.month.listMonth)
           })
         }
+
+        this.totalExpense();
 
         setTimeout(() => {
           this.dataSource.data = arr;
@@ -131,6 +134,26 @@ export class DebtsComponent implements AfterViewInit{
           })
       }
     }
+  }
+
+
+  generateTotalExpenseArray() {
+    const total = this.arrDebts.map((total: any) => Number(total.value));
+    return total    
+  }
+
+  totalExpense() {
+    const totalArr = this.generateTotalExpenseArray();
+
+    this.arrDebts = totalArr.reduce((total: any, num: any)=> total + num);
+  
+    const dataBalanceDebts = {
+      data: {
+        title: 'Total de Dívidas',
+        total: this.arrDebts
+      }
+    }
+    this.storeService.setBalanceDebtsTotal(dataBalanceDebts)
   }
 
 }

@@ -1,1 +1,7 @@
-<p>balance-total-card works!</p>
+<div *ngIf="showBalanceTotal">
+    <mat-card
+      class="card">
+      <p>{{showBalanceTotal.title}}</p>
+      <h1>{{showBalanceTotal.value}}</h1>
+    </mat-card>
+  </div>

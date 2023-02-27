@@ -21,7 +21,8 @@ export class RevenuesComponent implements AfterViewInit{
   user!: string;
   loading = false;
   emptyResult = false;
-  arrRevenues: any[] = []
+  arrRevenues: any[] = [];
+  totalRevenues!: any
 
   public dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = [
@@ -85,6 +86,9 @@ export class RevenuesComponent implements AfterViewInit{
             arr.push(element.user.month.listMonth)
           })
         }
+        this.generateTotalExpenseArray();
+        this.totalExpense()
+
 
         setTimeout(() => {
           this.dataSource.data = arr;
@@ -140,4 +144,25 @@ export class RevenuesComponent implements AfterViewInit{
     this.monthSelected == undefined ? (this.monthSelected = letterDateString) : this.monthSelected 
     
   }
+
+  generateTotalExpenseArray() {
+    const total = this.arrRevenues.map(total => Number(total.value));
+    return total    
+  }
+
+  totalExpense() {
+    const totalArr = this.generateTotalExpenseArray();
+
+    this.totalRevenues = totalArr.reduce((total, num)=> total + num);
+  
+    const dataBalanceRevenues = {
+      data: {
+        title: 'Total Receita',
+        total: this.totalRevenues
+      }
+    }
+
+    this.storeService.setBalanceRevenuesTotal(dataBalanceRevenues)
+  }
+  
 }
