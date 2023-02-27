@@ -94,6 +94,24 @@ export class ApiService {
       )
   }
 
+  getUser(id: string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.BASE_URL}/user/${id}`)
+    .pipe(
+      catchError((err) => {
+        if(err.status === 0 && err.status !== 404) {
+          this.utilsService.showError('Ocorreu um erro na aplicação, tente novamente')
+        } else if(err.status === 404) {
+          // msg vindo do back
+          this.utilsService.showError(err.error.message);
+
+        } else {
+         this.utilsService.showError('Ocorreu um erro no servidor, tente novamente mais tarde!');
+        }
+        return throwError(() => err) 
+      })
+    )
+  }
+
   registerRevenues(revenue: any): Observable<RegisterRevenues> {
     return this.httpClient.post<RegisterRevenues>(`${environment.BASE_URL}/auth/revenues`, revenue)
     .pipe(
@@ -231,6 +249,8 @@ export class ApiService {
       })
     )
   }
+
+
 
 }
 
