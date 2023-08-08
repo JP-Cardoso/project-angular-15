@@ -13,7 +13,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: './continuation-register.component.html',
   styleUrls: ['./continuation-register.component.scss']
 })
-export class ContinuationRegisterComponent implements OnDestroy{
+export class ContinuationRegisterComponent implements OnDestroy {
 
   form!: FormGroup;
   preview!: any;
@@ -28,7 +28,7 @@ export class ContinuationRegisterComponent implements OnDestroy{
     private localStorageService: LocalstorageService,
     private utilsService: UtilsService
   ) {
-    console.log(this.preview);   
+    console.log(this.preview);
     this.initForms()
   }
 
@@ -45,7 +45,7 @@ export class ContinuationRegisterComponent implements OnDestroy{
 
   onChange(event: any) {
 
-    if(event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event.target.files.length > 0) {
       this.isDefault = false;
       const file = event.target.files[0];
 
@@ -67,9 +67,9 @@ export class ContinuationRegisterComponent implements OnDestroy{
     image = this.getValueControl(this.form, 'avatar'),
     password = this.getValueControl(this.form, 'password'),
     confirmPassword = this.getValueControl(this.form, 'confirmPassword')
-    
+
   ) {
-    const payload = {name, email, age, image, password, confirmPassword};
+    const payload = { name, email, age, image, password, confirmPassword };
 
     return payload;
   }
@@ -78,21 +78,17 @@ export class ContinuationRegisterComponent implements OnDestroy{
     return form.controls[control].value
   }
 
-   // console.log(this.form);
-    // console.log(this.preview);
-    // console.log(this.createFormPayload());  
   submit() {
-     if(this.isValidForm()) {
+    if (this.isValidForm()) {
       this.apiService.registerUser(this.createFormPayload())
         .pipe(
           takeUntil(this.destroy$)
         ).subscribe((res: RegisterUser) => {
-          // console.log(res.message);
           this.utilsService.showSuccess(res.message);
           this.localStorageService.setLocalStorage('userInfo', JSON.stringify(res.user))
           this.refreshPage();
         })
-     }
+    }
   }
 
   isValidForm(): boolean {
